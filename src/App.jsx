@@ -1,5 +1,5 @@
 import './App.css';
-import React, {Component} from 'react';
+import {React, useState} from 'react';
 import {Calendar, momentLocalizer} from 'react-big-calendar';
 import moment from 'moment';
 
@@ -8,31 +8,63 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 const localizer = momentLocalizer(moment);
 
-class App extends Component {
-  state = {
-    events: [
+const App = () => {
+  let events = [
+    {
+      start: moment().toDate(),
+      end: moment().add(2, 'hours').toDate(),
+      title: 'Table 2 reservation',
+    },
+  ];
+  const [myEvents, setEvents] = useState(events);
+
+  /*events: [
       {
         start: moment().toDate(),
         end: moment().add(1, 'days').toDate(),
         title: 'Some title',
       },
-    ],
-  };
+      {
+        start: moment().toDate(),
+        end: moment().add(2, 'days').toDate(),
+        title: 'Table 2 reserved',
+      },
+    ],*/
 
-  render() {
-    return (
+  return (
+    <>
       <div className="App">
         <Calendar
           localizer={localizer}
           defaultDate={new Date()}
-          defaultView="month"
-          events={this.state.events}
+          defaultView="week"
+          events={myEvents}
           style={{height: '100vh'}}
         />
       </div>
-    );
-  }
-}
+      <div>
+        <input type="text"></input>
+        <input type="text"></input>
+        <button
+          onClick={(events) => {
+            console.log(typeof events);
+            console.log(typeof myEvents);
+            let event = {
+              start: moment().toDate(),
+              end: moment().add(5, 'hours').toDate(),
+              title: 'Table 2 reservation',
+            };
+            events.push(event);
+            setEvents(myEvents);
+          }}
+          type="button"
+        >
+          Reservation
+        </button>
+      </div>
+    </>
+  );
+};
 
 /*
 import {Calendar, momentLocalizer} from 'react-big-calendar';
