@@ -1,4 +1,5 @@
 import {addUser, findUserById, listAllUsers, putUserById, deleteUserById} from "../models/user-model.js";
+import bcrypt from 'bcrypt';
 
 const getUser = async (req, res) => {
   res.json(await listAllUsers());
@@ -15,6 +16,7 @@ const getUserById = async (req, res) => {
 
 const postUser = async (req, res) => { // in postman, only adding raw data works on this
   try {
+    req.body.password = bcrypt.hashSync(req.body.password, 10);
     console.log('Form Data:', req.body); // Log form data
     const result = await addUser(req.body);
     if (result.user_id) {
@@ -30,6 +32,7 @@ const postUser = async (req, res) => { // in postman, only adding raw data works
 
 const putUser = async (req, res) => {
     // not implemented in this example, this is future homework
+    req.body.password = bcrypt.hashSync(req.body.password, 10);
     const updateUser = await putUserById(req.body, req.params.id);
     if (updateUser) {
       res.status(200).json({message: 'User item updated.', updateUser})
