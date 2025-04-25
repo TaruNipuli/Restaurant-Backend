@@ -5,7 +5,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-//app.use('/public', express.static('public'));
 app.use('/api/v1', api);
 
 app.get('/', (req, res) => {
