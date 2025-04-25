@@ -1,5 +1,6 @@
-import {addUser, findUserById, listAllUsers, putUserById, deleteUserById} from "../models/user-model.js";
+import {addUser, findUserById, listAllUsers, putUserById, deleteUserById, getUserByEmail} from "../models/user-model.js";
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 const getUser = async (req, res) => {
   res.json(await listAllUsers());
@@ -58,4 +59,36 @@ const deleteUser = async (req, res) => {
   }
 };
 
-export {getUser, getUserById, postUser, putUser, deleteUser};
+const login = async (req, res) => {
+  try {
+    const {email, password} = req.body;
+
+  const data = await getUserByEmail(email);
+  if (!data) {
+    return res.status(401).json({ message: 'User not found' });
+  }
+
+  // compares hashed password
+  const isMatch = await bcrypt.compare(password, data.password);
+  if (!isMatch) {
+    return res.status(401).json({ message: 'Invalid password' });
+  }
+
+  const token = jwt.sign(
+    { id: data.id, email: data.email, role: data.role },
+    process.env.JWT_SECRET,
+    { expiresIn: '1h' }
+  );
+
+  res.json({
+    message: 'Login successful',
+    token,
+    user: { id: data.id, name: data.name, email: data.email, phone_number: data.phone_number, registration_time: data.registration_time, role: data.role }
+  });
+  } catch (error) {
+    console.error('Error logging in:', error.message);
+    res.status(500).json({ message: 'Internal server error.' });
+  }
+};
+
+export {getUser, getUserById, postUser, putUser, deleteUser, login};
