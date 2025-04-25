@@ -57,5 +57,14 @@ const deleteUserById = async (id) => {
   }
   return {message: 'success'};
 };
+
+const getUserByEmail = async (email) => {
+  const [rows] = await promisePool.execute(
+    'SELECT * FROM User WHERE email = ?',
+    [email]
+  );
+  return rows[0];
+};
+
   
-export { listAllUsers, findUserById, addUser, putUserById, deleteUserById};
+export { listAllUsers, findUserById, addUser, putUserById, deleteUserById, getUserByEmail};
