@@ -1,4 +1,4 @@
-import {addUser, findUserById, listAllUsers, putUserById, deleteUserById, getUserByEmail, getEmailAvailability} from "../models/user-model.js";
+import {addUser, findUserById, listAllUsers, updateUserById, deleteUserById, getUserByEmail, getEmailAvailability} from "../models/user-model.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -31,28 +31,38 @@ const getUserById = async (req, res) => {
   };
 };*/
 
-const putUser = async (req, res) => {
-    req.body.password = bcrypt.hashSync(req.body.password, 10);
-    const updateUser = await putUserById(req.body, req.params.id);
-    if (updateUser) {
-      res.status(200).json({message: 'User item updated.', updateUser})
-    } else {
-      res.sendStatus(404);
-    }
-  };
-
-const deleteUser = async (req, res) => {
+const updateUser = async (req, res) => {
   try {
-    const userId = req.params.id;
+    const { email, password, confirmPassword } = req.body;
+    const id = req.params.id;
 
-    const deleteUserResult = await deleteUserById(userId);
-    if (deleteUserResult) {
-      res.status(200).json({ message: 'User deleted successfully.' });
+    // if email is being changed
+    if (email) {
+      const isAvailable = await getEmailAvailability(email); 
+      if (!isAvailable) {
+        return res.status(400).json({ message: 'Email already in use.' });
+      }
+    }
+
+    // if password is being changed
+    if (password || confirmPassword) {
+      if (password !== confirmPassword) {
+        return res.status(400).json({ message: 'Passwords do not match.' });
+      }
+      delete req.body.confirmPassword; // delete confirmPassword from body, before sending it
+      req.body.password = bcrypt.hashSync(password, 10);
+    }
+
+    const updateResult = await updateUserById(req.body, id);
+
+    if (updateResult) {
+      res.status(200).json({ message: 'User updated successfully.', updateResult });
     } else {
       res.status(404).json({ message: 'User not found.' });
     }
+
   } catch (error) {
-    console.error('Error in deleteUser:', error.message); // Log the error
+    console.error('Error in updating the profile:', error.message);
     res.status(500).json({ message: 'Internal server error.' });
   }
 };
@@ -128,4 +138,20 @@ const login = async (req, res) => {
   }
 };
 
-export {getUser, getUserById, putUser, deleteUser, login, register};
+const deleteUser = async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    const deleteUserResult = await deleteUserById(userId);
+    if (deleteUserResult) {
+      res.status(200).json({ message: 'User deleted successfully.' });
+    } else {
+      res.status(404).json({ message: 'User not found.' });
+    }
+  } catch (error) {
+    console.error('Error in deleteUser:', error.message); // Log the error
+    res.status(500).json({ message: 'Internal server error.' });
+  }
+};
+
+export {getUser, getUserById, updateUser, login, register, deleteUser};

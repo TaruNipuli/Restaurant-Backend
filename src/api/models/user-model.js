@@ -38,15 +38,14 @@ const addUser = async (user) => { // provide only these in the body: name, email
   return {user_id: rows[0].insertId};
 };
   
-const putUserById = async (user, id) => {
-  const sql = promisePool.format(`UPDATE User SET ? WHERE id = ?`, 
-    [user, id,]);
-  const rows = await promisePool.execute(sql);
+const updateUserById = async (user, id) => {
+  const sql = promisePool.format(`UPDATE User SET ? WHERE id = ?`, [user, id]);
+  const [rows] = await promisePool.execute(sql);
   console.log('rows', rows);
   if (rows.affectedRows === 0) {
     return false;
   }
-  return {message: 'success'};
+  return { message: 'success' };
 };
   
 const deleteUserById = async (id) => {
@@ -77,4 +76,4 @@ const getEmailAvailability = async (email) => {
 
 
   
-export { listAllUsers, findUserById, addUser, putUserById, deleteUserById, getUserByEmail, getEmailAvailability};
+export { listAllUsers, findUserById, addUser, updateUserById, deleteUserById, getUserByEmail, getEmailAvailability};
