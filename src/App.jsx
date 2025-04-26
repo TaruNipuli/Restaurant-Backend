@@ -18,6 +18,9 @@ const App = () => {
   ];
   const [myEvents, setEvents] = useState(events);
 
+  const updateEvents = (start, end, title) => {
+    setEvents((prev) => [...prev, {start, end, title}]);
+  };
   /*events: [
       {
         start: moment().toDate(),
@@ -46,7 +49,13 @@ const App = () => {
         <input type="text"></input>
         <input type="text"></input>
         <button
-          onClick={(events) => {
+          onClick={() => {
+            updateEvents(
+              moment().toDate(),
+              moment().add(5, 'hours').toDate(),
+              'Reservation',
+            );
+            /*
             console.log(typeof events);
             console.log(typeof myEvents);
             let event = {
@@ -56,6 +65,7 @@ const App = () => {
             };
             events.push(event);
             setEvents(myEvents);
+          */
           }}
           type="button"
         >
