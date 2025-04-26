@@ -26,7 +26,7 @@ try {
 };
   
 const addUser = async (user) => { // provide only these in the body: name, email, phone_number, password
-  const {name, email, phone_number, password, role = 'customer'} = user;
+  const {name, email, phone_number, password, role} = user;
   const sql = `INSERT INTO User (name, email, phone_number, password, role)
               VALUES (?, ?, ?, ?, ?)`;
   const params = [name, email, phone_number, password, role];
@@ -66,5 +66,15 @@ const getUserByEmail = async (email) => {
   return rows[0];
 };
 
+const getEmailAvailability = async (email) => {
+  const [rows] = await promisePool.execute(
+    'SELECT * FROM User WHERE email = ?',
+    [email]
+  );
+  // if found, email is not available
+  return rows.length === 0;
+};
+
+
   
-export { listAllUsers, findUserById, addUser, putUserById, deleteUserById, getUserByEmail};
+export { listAllUsers, findUserById, addUser, putUserById, deleteUserById, getUserByEmail, getEmailAvailability};

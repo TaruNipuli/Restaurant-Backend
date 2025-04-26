@@ -5,6 +5,6 @@ const router = express.Router();
 
 // bind base url from user to userRouter
 router.use('/users', userRouter);
-router.use('/auth', userRouter);
+router.use('/auth', userRouter); // + login
 
 export default router;
