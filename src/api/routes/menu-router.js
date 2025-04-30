@@ -1,12 +1,18 @@
 import express from 'express';
-import { fetchMenus, fetchMenuById } from '../controllers/menu-controller.js';
+import upload from '../../utils/upload-config.js';
+
+
+import { fetchMenus, fetchMenuById, createMenu } from '../controllers/menu-controller.js';
 
 const router = express.Router();
 
-// Route to get all menus
+// GET all menus
 router.get('/', fetchMenus);
 
-// Route to get a single menu by ID
+// GET a single menu by ID
 router.get('/:id', fetchMenuById);
+
+// POST a new menu with image upload
+router.post('/', upload.single('image'), createMenu);
 
 export default router;
