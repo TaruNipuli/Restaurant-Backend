@@ -74,3 +74,9 @@ export const insertMenu = async ({ restaurant_id, name, description, image }) =>
     image
   };
 };
+
+// Delete a menu by ID
+export const deleteMenuModel = async (id) => {
+  const [result] = await promisePool.execute('DELETE FROM Menu WHERE id = ?', [id]);
+  return result.affectedRows > 0;
+};
