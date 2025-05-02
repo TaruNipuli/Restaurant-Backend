@@ -1,0 +1,52 @@
+### Upload menu with image to production
+POST http://10.120.32.81/restaurant/api/v1/menus
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="name"
+
+Kasvitarhan aarteet
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="description"
+
+Täysin kasvispohjainen menu täynnä värikkäitä ja maukkaita vihanneksia.
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="restaurant_id"
+
+1
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="menu1.jpg"
+Content-Type: image/jpeg
+
+< ./menu3.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### Upload to local
+POST http://127.0.0.1:3000/api/v1/menus
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="name"
+
+New cat title
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="description"
+
+New cat title
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="restaurant_id"
+
+1
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="menu1.jpg"
+Content-Type: image/jpeg
+
+< ./menu1.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+
+### Testataan post metodia ilman arvoja
+POST http://localhost:3001/api/v1/cats
+
+### testaan juuren get metodia
+GET http://localhost:3001/
