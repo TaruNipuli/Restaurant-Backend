@@ -2,7 +2,7 @@ import express from 'express';
 import upload from '../../utils/upload-config.js';
 
 
-import { fetchMenus, fetchMenuById, createMenu, deleteMenu } from '../controllers/menu-controller.js';
+import { fetchMenus, fetchMenuById, createMenu, deleteMenu, updateMenu } from '../controllers/menu-controller.js';
 
 const router = express.Router();
 
@@ -17,5 +17,9 @@ router.post('/', upload.single('image'), createMenu);
 
 // DELETE a menu by ID
 router.delete('/:id', deleteMenu);
+
+// PUT, update menu
+router.put('/:id', upload.single('image'), updateMenu);
+
 
 export default router;
