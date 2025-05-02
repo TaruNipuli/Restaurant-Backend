@@ -35,16 +35,13 @@ const findReservationByName = async (resName) => {
   return rows[0];
 };
 
-//Trouble with inserting a reservation into the database
-//Problem with auto-increment?
-//"Bind parameters must not contain undefined. To pass SQL NULL specify JS null"
 const addReservation = async (reservation) => {
   const {
     person_id,
     restaurant_id,
-    name,
-    start,
-    end,
+    reservation_name,
+    reservation_start,
+    reservation_end,
     table_id,
     registered_user,
   } = reservation;
@@ -54,9 +51,9 @@ const addReservation = async (reservation) => {
   const params = [
     person_id,
     restaurant_id,
-    name,
-    start,
-    end,
+    reservation_name,
+    reservation_start,
+    reservation_end,
     table_id,
     registered_user,
   ];
@@ -67,6 +64,21 @@ const addReservation = async (reservation) => {
   }
   return { id: rows[0].insertId };
 };
+
+/*
+const findReservationByName = async (resName) => {
+  const sql = promisePool.format(
+    "SELECT * FROM Reservation WHERE reservation_name= ?",
+    [resName]
+  );
+  const [rows] = await promisePool.execute(sql);
+  console.log("rows", rows);
+  if (rows.length === 0) {
+    return false;
+  }
+  return rows[0];
+};
+*/
 
 //If there is time
 /*
