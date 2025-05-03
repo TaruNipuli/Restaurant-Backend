@@ -1,6 +1,6 @@
 import { insertDish, getAllDishes, deleteDish, updateDish } from '../models/dish-model.js';
 
-// Create
+// Create dish
 export const createDish = async (req, res) => {
     try {
         const { menu_id, dish_name, type, description, price } = req.body;
@@ -16,7 +16,7 @@ export const createDish = async (req, res) => {
     }
 };
 
-// Read all (optional)
+// Get all dishes
 export const fetchDishes = async (req, res) => {
     try {
         const dishes = await getAllDishes();
@@ -27,7 +27,7 @@ export const fetchDishes = async (req, res) => {
     }
 };
 
-// Delete
+// Delete dish
 export const removeDish = async (req, res) => {
     const { id } = req.params;
     try {
@@ -42,7 +42,7 @@ export const removeDish = async (req, res) => {
     }
 };
 
-// Update
+// Update dish
 export const modifyDish = async (req, res) => {
     const { id } = req.params;
     const { dish_name, type, description, price } = req.body;
