@@ -1,5 +1,5 @@
 import express from 'express';
-import { fetchAllAllergens, createAllergen, linkAllergenToDish, unlinkAllergenFromDish, deleteAllergenById } from '../controllers/allergen-controller.js';
+import { fetchAllAllergens, createAllergen, linkAllergenToDish, unlinkAllergenFromDish, deleteAllergenById, getAllergenById } from '../controllers/allergen-controller.js';
 
 const router = express.Router();
 
@@ -17,5 +17,7 @@ router.post('/unlink', unlinkAllergenFromDish);
 
 // Delete an allergen by ID
 router.delete('/:id', deleteAllergenById);
+
+router.get('/:id', getAllergenById);
 
 export default router;

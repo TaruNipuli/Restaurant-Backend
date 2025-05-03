@@ -1,4 +1,4 @@
-import { getAllAllergens, insertAllergen, addAllergenToDish, removeAllergenFromDish, deleteAllergen } from '../models/allergen-model.js';
+import { getAllAllergens, insertAllergen, addAllergenToDish, removeAllergenFromDish, deleteAllergen, getAllergenByIdFromDb } from '../models/allergen-model.js';
 
 // Fetch all allergens
 export const fetchAllAllergens = async (req, res) => {
@@ -59,5 +59,19 @@ export const deleteAllergenById = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Failed to delete allergen' });
+    }
+};
+
+export const getAllergenById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const allergen = await getAllergenByIdFromDb(id);
+        if (!allergen) {
+            return res.status(404).json({ message: 'Allergen not found' });
+        }
+        res.status(200).json(allergen);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error fetching allergen' });
     }
 };
