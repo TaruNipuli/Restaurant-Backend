@@ -1,4 +1,4 @@
-import { getMenus, getMenuById, insertMenu } from '../models/menu-model.js';
+import { getMenus, getMenuById, insertMenu, deleteMenuModel, updateMenuModel } from '../models/menu-model.js';
 
 // Get all menus
 export const fetchMenus = async (req, res) => {
@@ -37,5 +37,39 @@ export const createMenu = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Failed to create menu' });
+    }
+};
+
+// Delete menu
+export const deleteMenu = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const success = await deleteMenuModel(id);
+        if (!success) {
+            return res.status(404).json({ message: 'Menu not found' });
+        }
+        res.status(200).json({ message: 'Menu deleted successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to delete menu' });
+    }
+};
+
+// Update menu
+export const updateMenu = async (req, res) => {
+    const { id } = req.params;
+    const { name, description, restaurant_id } = req.body;
+    const image = req.file?.filename || null;
+
+    try {
+        const success = await updateMenuModel(id, { name, description, restaurant_id, image });
+        if (!success) {
+            return res.status(404).json({ message: 'Menu not found' });
+        }
+        res.status(200).json({ message: 'Menu updated successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to update menu' });
     }
 };

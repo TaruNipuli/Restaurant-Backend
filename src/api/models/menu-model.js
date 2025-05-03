@@ -74,3 +74,25 @@ export const insertMenu = async ({ restaurant_id, name, description, image }) =>
     image
   };
 };
+
+// Delete menu
+export const deleteMenuModel = async (id) => {
+  const [result] = await promisePool.execute('DELETE FROM Menu WHERE id = ?', [id]);
+  return result.affectedRows > 0;
+};
+
+// Update menu 
+export const updateMenuModel = async (id, { name, description, restaurant_id, image }) => {
+  if (image) {
+    await promisePool.execute(
+      `UPDATE Menu SET name = ?, description = ?, restaurant_id = ?, image = ? WHERE id = ?`,
+      [name, description, restaurant_id, image, id]
+    );
+  } else {
+    await promisePool.execute(
+      `UPDATE Menu SET name = ?, description = ?, restaurant_id = ? WHERE id = ?`,
+      [name, description, restaurant_id, id]
+    );
+  }
+  return true;
+};

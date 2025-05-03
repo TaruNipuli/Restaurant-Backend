@@ -1,0 +1,35 @@
+### Fetch all allergens
+GET http://127.0.0.1:3000/api/v1/allergens
+
+### Get allergen by ID
+GET http://127.0.0.1:3000/api/v1/allergens/1
+
+
+### Create a new allergen
+POST http://127.0.0.1:3000/api/v1/allergens
+Content-Type: application/json
+
+{
+  "name": "Pähkinä"
+}
+
+### Link allergen to a dish
+POST http://127.0.0.1:3000/api/v1/allergens/link
+Content-Type: application/json
+
+{
+  "dish_id": 11,
+  "allergen_id": 2
+}
+
+### Unlink allergen from a dish
+POST http://127.0.0.1:3000/api/v1/allergens/unlink
+Content-Type: application/json
+
+{
+  "dish_id": 1,
+  "allergen_id": 6
+}
+
+### Delete allergen
+DELETE http://127.0.0.1:3000/api/v1/allergens/6

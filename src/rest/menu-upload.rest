@@ -21,7 +21,44 @@ Content-Type: image/jpeg
 < ./menu3.jpg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
-### Upload to local
+
+###Delete menu (production)
+DELETE http://10.120.32.81/api/v1/menus/2
+
+## Update menu
+PUT http://10.120.32.81/api/v1/menus/1
+Content-Type: application/json
+
+{
+  "name": "Uudistettu Metsämenu",
+  "description": "Päivitetty kuvaus metsän mauista.",
+  "restaurant_id": 1
+}
+
+### Update menu image also (production)
+PUT http://10.120.32.81/api/v1/menus/1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="name"
+
+Päivitetty menun nimi
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="description"
+
+Uusi kuvaus menusta, jossa on uusi kuva.
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="restaurant_id"
+
+1
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="menu2.jpg"
+Content-Type: image/jpeg
+
+< ./menu2.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### Upload menu to local
 POST http://127.0.0.1:3000/api/v1/menus
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
@@ -43,6 +80,44 @@ Content-Type: image/jpeg
 
 < ./menu1.jpg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###Delete menu (local)
+DELETE http://127.0.0.1:3000/api/v1/menus/2
+
+
+### Update menu (local)
+PUT http://127.0.0.1:3000/api/v1/menus/1
+Content-Type: application/json
+
+{
+  "name": "Metsämenu",
+  "description": "Päivitetty menu metsän mauista.",
+  "restaurant_id": 1
+}
+
+### Update menu image also (local)
+PUT http://127.0.0.1:3000/api/v1/menus/1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="name"
+
+Päivitetty menun nimi
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="description"
+
+Uusi kuvaus menusta, jossa on uusi kuva.
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="restaurant_id"
+
+1
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="menu2.jpg"
+Content-Type: image/jpeg
+
+< ./menu2.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
 
 
 ### Testataan post metodia ilman arvoja

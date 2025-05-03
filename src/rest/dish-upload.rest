@@ -1,0 +1,72 @@
+### Create new dish
+POST http://10.120.32.81/restaurant/api/v1/dishes
+Content-Type: application/json
+
+{
+  "menu_id": 1,
+  "dish_name": "Paistettu lohi",
+  "type": "Pääruoka",
+  "description": "Voissa paistettua lohta ja perunoita",
+  "price": 25
+}
+
+### Delete dish
+DELETE http://10.120.32.81/restaurant/api/v1/dishes/1
+
+### get all dishes
+GET http://10.120.32.81/restaurant/api/v1/dishes
+
+### Modify dish
+PUT http://10.120.32.81/restaurant/api/v1/dishes/1
+Content-Type: application/json
+
+{
+  "dish_name": "Uunilohi",
+  "type": "Pääruoka",
+  "description": "Uunissa paistettua lohta ja sitruunakastiketta",
+  "price": 27
+}
+
+
+### LOCAL REUQESTS:
+
+### Create new dish
+POST http://127.0.0.1:3000/api/v1/dishes
+Content-Type: application/json
+
+{
+  "menu_id": 1,
+  "dish_name": "Paistettu lohi",
+  "type": "Pääruoka",
+  "description": "Voissa paistettua lohta ja perunoita",
+  "price": 25
+}
+
+
+
+### Delete dish
+DELETE http://127.0.0.1:3000/api/v1/dishes/10
+
+
+### get all dishes
+GET http://127.0.0.1:3000/api/v1/dishes
+
+### get one dish
+GET http://127.0.0.1:3000/api/v1/dishes/11
+
+### Modify dish
+PUT http://127.0.0.1:3000/api/v1/dishes/11
+Content-Type: application/json
+
+{
+  "dish_name": "Uunilohi",
+  "type": "Pääruoka",
+  "description": "Uunissa paistettua lohta ja sitruunakastiketta",
+  "price": 27
+}
+
+### Delete dish
+DELETE http://127.0.0.1:3000/api/v1/dishes/1
+
+
+
