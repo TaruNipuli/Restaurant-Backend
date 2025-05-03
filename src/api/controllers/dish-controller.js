@@ -1,4 +1,4 @@
-import { insertDish, getAllDishes, deleteDish, updateDish } from '../models/dish-model.js';
+import { insertDish, getAllDishes, deleteDish, updateDish, getDishByIdFromDb } from '../models/dish-model.js';
 
 // Create dish
 export const createDish = async (req, res) => {
@@ -56,5 +56,20 @@ export const modifyDish = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Failed to update dish' });
+    }
+};
+
+// Get one dish by id
+export const getDishById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const dish = await getDishByIdFromDb(id);
+        if (!dish) {
+            return res.status(404).json({ message: 'Dish not found' });
+        }
+        res.status(200).json(dish);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error fetching dish' });
     }
 };

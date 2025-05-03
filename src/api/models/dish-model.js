@@ -38,3 +38,9 @@ export const updateDish = async (id, updatedData) => {
     );
     return result.affectedRows;
 };
+
+// Get one dish by id
+export const getDishByIdFromDb = async (id) => {
+    const [rows] = await promisePool.execute('SELECT * FROM Dishes WHERE id = ?', [id]);
+    return rows[0];
+};

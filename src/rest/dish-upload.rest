@@ -51,8 +51,11 @@ DELETE http://127.0.0.1:3000/api/v1/dishes/10
 ### get all dishes
 GET http://127.0.0.1:3000/api/v1/dishes
 
+### get one dish
+GET http://127.0.0.1:3000/api/v1/dishes/11
+
 ### Modify dish
-PUT http://127.0.0.1:3000/api/v1/dishes/10
+PUT http://127.0.0.1:3000/api/v1/dishes/11
 Content-Type: application/json
 
 {
