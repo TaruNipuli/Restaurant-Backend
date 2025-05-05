@@ -34,7 +34,8 @@ Content-Type: application/json
 ### Delete allergen
 DELETE http://10.120.32.81/restaurant/api/v1/allergens/6
 
-
+### Get restaurant info
+GET http://10.120.32.81/restaurant/api/v1/info
 
 
 
@@ -76,3 +77,5 @@ Content-Type: application/json
 
 ### Delete allergen
 DELETE http://127.0.0.1:3000/api/v1/allergens/6
+
+
