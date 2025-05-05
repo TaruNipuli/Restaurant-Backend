@@ -35,7 +35,7 @@ Content-Type: application/json
 DELETE http://10.120.32.81/restaurant/api/v1/allergens/6
 
 ### Get restaurant info
-GET http://10.120.32.81/restaurant/api/v1/info
+GET http://10.120.32.81/restaurant/api/v1/restaurant/1/opening-hours
 
 
 
