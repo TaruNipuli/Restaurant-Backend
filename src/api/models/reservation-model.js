@@ -35,16 +35,13 @@ const findReservationByName = async (resName) => {
   return rows[0];
 };
 
-//Trouble with inserting a reservation into the database
-//Problem with auto-increment?
-//"Bind parameters must not contain undefined. To pass SQL NULL specify JS null"
 const addReservation = async (reservation) => {
   const {
     person_id,
     restaurant_id,
-    name,
-    start,
-    end,
+    reservation_name,
+    reservation_start,
+    reservation_end,
     table_id,
     registered_user,
   } = reservation;
@@ -54,9 +51,9 @@ const addReservation = async (reservation) => {
   const params = [
     person_id,
     restaurant_id,
-    name,
-    start,
-    end,
+    reservation_name,
+    reservation_start,
+    reservation_end,
     table_id,
     registered_user,
   ];
@@ -96,6 +93,30 @@ const removeReservation = async (id) => {
   return { message: "success" };
 };
 
+const findReservationFromUserId = async (id) => {
+  const sql = promisePool.format(
+    "SELECT * FROM Reservation JOIN User ON Reservation.person_id=User.id WHERE person_id=?; ",
+    [id]
+  );
+  const [rows] = await promisePool.execute(sql);
+  console.log("rows", rows);
+  if (rows.length === 0) {
+    return false;
+  }
+  return rows;
+};
+
+const addDishByReservation = async ({ reservation_id, dish_id }) => {
+  const [result] = await promisePool.execute(
+    "INSERT INTO `Selected_dishes` (`reservation_id`, `dish_id`) VALUES (?, ?);",
+    [reservation_id, dish_id]
+  );
+
+  return {
+    reservation_id,
+    dish_id,
+  };
+};
 export {
   listAllReservations,
   findReservationById,
@@ -103,4 +124,6 @@ export {
   addReservation,
   /*modifyReservation,*/
   removeReservation,
+  findReservationFromUserId,
+  addDishByReservation,
 };

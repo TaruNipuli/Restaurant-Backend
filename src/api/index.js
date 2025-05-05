@@ -5,6 +5,7 @@ import reservationRouter from "./routes/reservation-router.js";
 import dishRouter from './routes/dish-router.js';
 import allergenRouter from './routes/allergen-router.js';
 import infoRouter from './routes/info-router.js';
+import openingHoursRouter from './routes/opening-hours-router.js';
 
 const router = express.Router();
 
@@ -20,7 +21,8 @@ router.use('/dishes', dishRouter);
 
 router.use("/allergens", allergenRouter);
 
-router.use("/info", infoRouter);
+router.use('/info', infoRouter);
+router.use("/opening-hours", openingHoursRouter);
 
 
 
