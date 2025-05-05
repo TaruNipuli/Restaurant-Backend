@@ -5,6 +5,8 @@ import {
   addReservation,
   /*modifyReservation,*/
   removeReservation,
+  findReservationFromUserId,
+  addDishByReservation,
 } from "../models/reservation-model.js";
 
 //async-await might not be necessary
@@ -62,6 +64,25 @@ const clearOldReservations = async () => {
   console.log(reservations);
 };
 
+const getReservationByUserId = async (req, res) => {
+  const reservation = await findReservationFromUserId(req.params.id);
+  if (reservation) {
+    res.json(reservation);
+  } else {
+    res.sendStatus(404);
+  }
+};
+
+const postDish = async (req, res) => {
+  const result = await addDishByReservation(req.body);
+  if (result.id) {
+    res.status(201);
+    res.json({ message: "New dish added.", result });
+  } else {
+    res.sendStatus(400);
+  }
+};
+
 export {
   getReservations,
   getReservationById,
@@ -69,4 +90,6 @@ export {
   postReservation,
   /*putReservation,*/ deleteReservation,
   clearOldReservations,
+  getReservationByUserId,
+  postDish,
 };

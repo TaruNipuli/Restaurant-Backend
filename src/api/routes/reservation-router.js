@@ -5,6 +5,8 @@ import {
   getReservationByName,
   getReservations,
   postReservation,
+  getReservationByUserId,
+  postDish,
 } from "../controllers/reservation-controller.js";
 
 const reservationRouter = express.Router();
@@ -17,5 +19,7 @@ reservationRouter
   .delete(deleteReservation)
   .get(getReservationById);
 reservationRouter.route("/:reservation_name").get(getReservationByName);
+reservationRouter.route("/user/:id").get(getReservationByUserId);
+reservationRouter.route("/dish").post(postDish);
 
 export default reservationRouter;

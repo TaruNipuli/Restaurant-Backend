@@ -93,6 +93,30 @@ const removeReservation = async (id) => {
   return { message: "success" };
 };
 
+const findReservationFromUserId = async (id) => {
+  const sql = promisePool.format(
+    "SELECT * FROM Reservation JOIN User ON Reservation.person_id=User.id WHERE person_id=?; ",
+    [id]
+  );
+  const [rows] = await promisePool.execute(sql);
+  console.log("rows", rows);
+  if (rows.length === 0) {
+    return false;
+  }
+  return rows;
+};
+
+const addDishByReservation = async ({ reservation_id, dish_id }) => {
+  const [result] = await promisePool.execute(
+    "INSERT INTO `Selected_dishes` (`reservation_id`, `dish_id`) VALUES (?, ?);",
+    [reservation_id, dish_id]
+  );
+
+  return {
+    reservation_id,
+    dish_id,
+  };
+};
 export {
   listAllReservations,
   findReservationById,
@@ -100,4 +124,6 @@ export {
   addReservation,
   /*modifyReservation,*/
   removeReservation,
+  findReservationFromUserId,
+  addDishByReservation,
 };
