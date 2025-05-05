@@ -31,5 +31,5 @@ export const deleteAllergen = async (id) => {
 
 export const getAllergenByIdFromDb = async (id) => {
     const [rows] = await promisePool.execute('SELECT * FROM Allergen WHERE id = ?', [id]);
-    return rows[0]; // Palautetaan ensimmäinen rivi, jos löytyy
+    return rows[0];
 };

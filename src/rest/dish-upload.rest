@@ -3,11 +3,11 @@ POST http://10.120.32.81/restaurant/api/v1/dishes
 Content-Type: application/json
 
 {
-  "menu_id": 1,
-  "dish_name": "Paistettu lohi",
-  "type": "Pääruoka",
-  "description": "Voissa paistettua lohta ja perunoita",
-  "price": 25
+  "menu_id": 3,
+  "dish_name": "Chia-vanukas marjoilla",
+  "type": "Jälkiruoka",
+  "description": "Kookosmaitopohjainen chia-vanukas, koristeltuna kauden marjoilla ja paahdetulla kookoksella.",
+  "price": 6
 }
 
 ### Delete dish

@@ -15,7 +15,7 @@ Content-Disposition: form-data; name="restaurant_id"
 
 1
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="image"; filename="menu1.jpg"
+Content-Disposition: form-data; name="image"; filename="menu3.jpg"
 Content-Type: image/jpeg
 
 < ./menu3.jpg

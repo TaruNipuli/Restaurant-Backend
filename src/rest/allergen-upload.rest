@@ -1,4 +1,47 @@
 ### Fetch all allergens
+GET http://10.120.32.81/restaurant/api/v1/allergens
+
+### Get allergen by ID
+GET http://10.120.32.81/restaurant/api/v1/allergens/1
+
+
+### Create a new allergen
+POST http://10.120.32.81/restaurant/api/v1/allergens
+Content-Type: application/json
+
+{
+  "name": "Vegaaninen"
+}
+
+### Link allergen to a dish
+POST http://10.120.32.81/restaurant/api/v1/allergens/link
+Content-Type: application/json
+
+{
+  "dish_id": 2,
+  "allergen_id": 1
+}
+
+### Unlink allergen from a dish
+POST http://10.120.32.81/restaurant/api/v1/allergens/unlink
+Content-Type: application/json
+
+{
+  "dish_id": 1,
+  "allergen_id": 6
+}
+
+### Delete allergen
+DELETE http://10.120.32.81/restaurant/api/v1/allergens/6
+
+
+
+
+
+
+### LOCAL REQUESTS
+
+### Fetch all allergens
 GET http://127.0.0.1:3000/api/v1/allergens
 
 ### Get allergen by ID
@@ -10,7 +53,7 @@ POST http://127.0.0.1:3000/api/v1/allergens
 Content-Type: application/json
 
 {
-  "name": "Pähkinä"
+  "name": "Maito"
 }
 
 ### Link allergen to a dish
