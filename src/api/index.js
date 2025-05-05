@@ -21,7 +21,7 @@ router.use('/dishes', dishRouter);
 router.use("/allergens", allergenRouter);
 
 router.use('/info', infoRouter);
-router.use('/restaurant', openingHoursRouter);
+router.use("/opening-hours", openingHoursRouter);
 
 
 
