@@ -65,21 +65,6 @@ const addReservation = async (reservation) => {
   return { id: rows[0].insertId };
 };
 
-/*
-const findReservationByName = async (resName) => {
-  const sql = promisePool.format(
-    "SELECT * FROM Reservation WHERE reservation_name= ?",
-    [resName]
-  );
-  const [rows] = await promisePool.execute(sql);
-  console.log("rows", rows);
-  if (rows.length === 0) {
-    return false;
-  }
-  return rows[0];
-};
-*/
-
 //If there is time
 /*
 const modifyReservation = async (reservation, id) => {

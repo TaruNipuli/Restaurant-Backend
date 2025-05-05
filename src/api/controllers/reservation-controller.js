@@ -1,5 +1,7 @@
 import {
   listAllReservations,
+  findReservationById,
+  findReservationByName,
   addReservation,
   /*modifyReservation,*/
   removeReservation,
@@ -17,6 +19,24 @@ const postReservation = async (req, res) => {
     res.json({ message: "New reservation added.", result });
   } else {
     res.sendStatus(400);
+  }
+};
+
+const getReservationById = async (req, res) => {
+  const reservation = await findReservationById(req.params.id);
+  if (reservation) {
+    res.json(reservation);
+  } else {
+    res.sendStatus(404);
+  }
+};
+
+const getReservationByName = async (req, res) => {
+  const reservation = await findReservationByName(req.params.reservation_name);
+  if (reservation) {
+    res.json(reservation);
+  } else {
+    res.sendStatus(404);
   }
 };
 
@@ -44,6 +64,8 @@ const clearOldReservations = async () => {
 
 export {
   getReservations,
+  getReservationById,
+  getReservationByName,
   postReservation,
   /*putReservation,*/ deleteReservation,
   clearOldReservations,
