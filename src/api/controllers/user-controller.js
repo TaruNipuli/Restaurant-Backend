@@ -15,29 +15,18 @@ const getUserById = async (req, res) => {
   }
 };
 
-/*const postUser = async (req, res) => { // in postman, only adding raw data works on this
-  try {
-    req.body.password = bcrypt.hashSync(req.body.password, 10);
-    console.log('Form Data:', req.body); // Log form data
-    const result = await addUser(req.body);
-    if (result.user_id) {
-      res.status(201);
-      res.json({ message: 'New user added.', result });
-    } else {
-      res.status(400).json({ message: 'Failed to add user.' });
-    }
-  } catch (error) {
-    console.error('Error in postUser:', error.message); // Log the error message
-  };
-};*/
-
 const updateUser = async (req, res) => {
   try {
-    const { email, password, confirmPassword } = req.body;
+    const { email, password, confirmPassword, phone_number } = req.body;
     const id = req.params.id;
 
     // if email is being changed
     if (email) {
+      const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailValidation.test(email)) {
+        return res.status(400).json({ message: 'Invalid email format.' });
+      }
+
       const isAvailable = await getEmailAvailability(email); 
       if (!isAvailable) {
         return res.status(400).json({ message: 'Email already in use.' });
@@ -49,8 +38,18 @@ const updateUser = async (req, res) => {
       if (password !== confirmPassword) {
         return res.status(400).json({ message: 'Passwords do not match.' });
       }
-      delete req.body.confirmPassword; // delete confirmPassword from body, before sending it
+      if (password.length < 6) {
+        return res.status(400).json({ message: 'Password must be at least 6 characters long.' });
+      }
       req.body.password = bcrypt.hashSync(password, 10);
+    }
+
+    // if phone number is being changed
+    if (phone_number) {
+      const phoneValidation = /^\d{10}$/; // Change 10 to match your desired length
+      if (!phoneValidation.test(phone_number)) {
+        return res.status(400).json({ message: 'Phone number must be 10 digits (numbers only).' });
+      }
     }
 
     const updateResult = await updateUserById(req.body, id);
@@ -75,13 +74,30 @@ const register = async (req, res) => {
       return res.status(400).json({ message: 'All fields are required.' });
     }
 
+    // password valitation
     if (password !== confirmPassword) {
       return res.status(400).json({ message: 'Passwords do not match.' });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({ message: 'Password must be at least 6 characters long.' });
+    }
+
+    // email validation
+    const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailValidation.test(email)) {
+      return res.status(400).json({ message: 'Invalid email format.' });
     }
 
     const isAvailable = await getEmailAvailability(email);
     if (!isAvailable) {
       return res.status(400).json({ message: 'Email already in use.' });
+    }
+
+    // phone number validation
+    const phoneValidation = /^\d{10}$/; // Adjust length if needed
+    if (!phoneValidation.test(phone_number)) {
+      return res.status(400).json({ message: 'Phone number must be 10 digits (numbers only).' });
     }
 
     const hashedPassword = bcrypt.hashSync(password, 10);
