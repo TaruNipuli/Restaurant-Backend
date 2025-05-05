@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import express from "express";
 import cors from "cors";
 import api from "./api/index.js";
@@ -8,6 +9,14 @@ const app = express();
 app.use(cors());
 
 // Parse incoming JSON and form data
+=======
+import express from 'express';
+import api from './api/index.js';
+import cors from 'cors';
+const app = express();
+
+app.use(cors());
+>>>>>>> gerli-branch
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
