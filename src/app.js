@@ -18,4 +18,7 @@ app.get("/", (req, res) => {
   res.send("Welcome to our restaurant");
 });
 
+// Route to serve REST API documentation
+app.use("/docs", express.static("docs"));
+
 export default app;
