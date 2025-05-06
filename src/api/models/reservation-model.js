@@ -95,7 +95,7 @@ const removeReservation = async (id) => {
 
 const findReservationFromUserId = async (id) => {
   const sql = promisePool.format(
-    "SELECT * FROM Reservation JOIN User ON Reservation.person_id=User.id WHERE person_id=?; ",
+    "SELECT Reservation.id FROM Reservation JOIN User ON Reservation.person_id=User.id WHERE person_id=?; ",
     [id]
   );
   const [rows] = await promisePool.execute(sql);
@@ -113,10 +113,21 @@ const addDishByReservation = async ({ reservation_id, dish_id }) => {
   );
 
   return {
-    reservation_id,
-    dish_id,
+    reservation_id: result.insertId,
+    dish_id: result.insertId,
   };
 };
+
+/*
+  // insert data into prepared statement
+const insertSql = "INSERT INTO `Selected_dishes` (`reservation_id`, `dish_id`) VALUES (?, ?);";
+const dish = [reservation_id, dish_id];
+
+connection.query(insertSql, dish, (err, results) => {
+  if (err) throw err;
+  console.log('User added with ID:', results.insertId);
+});
+*/
 export {
   listAllReservations,
   findReservationById,
