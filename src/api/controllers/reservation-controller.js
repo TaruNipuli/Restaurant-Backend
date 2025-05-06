@@ -9,20 +9,31 @@ import {
   addDishByReservation,
 } from "../models/reservation-model.js";
 
-//async-await might not be necessary
 const getReservations = async (req, res) => {
-  res.json(await listAllReservations());
-};
-
-const postReservation = async (req, res) => {
-  const result = await addReservation(req.body);
-  if (result.id) {
-    res.status(201);
-    res.json({ message: "New reservation added.", result });
-  } else {
-    res.sendStatus(400);
+  try {
+    const reservations = await listAllReservations();
+    res.json(reservations);
+  } catch (error) {
+    console.error("Error fetching reservations:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
+const postReservation = async (req, res) => {
+  try {
+    const result = await addReservation(req.body);
+    if (result.id) {
+      res.status(201).json({ message: "New reservation added.", result });
+    } else {
+      res.status(400).json({ message: "Failed to add reservation." });
+    }
+  } catch (error) {
+    console.error("Error adding reservation:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 
 const getReservationById = async (req, res) => {
   const reservation = await findReservationById(req.params.id);
@@ -42,7 +53,7 @@ const getReservationByName = async (req, res) => {
   }
 };
 
-//If there is time
+// If there is time
 /*
 const putReservation = async (req, res) => {
   modifyReservation();
@@ -73,15 +84,21 @@ const getReservationByUserId = async (req, res) => {
   }
 };
 
+// addDishByReservation() returns { reservation_id, dish_id } and not an 'id' field, so result is enough
 const postDish = async (req, res) => {
-  const result = await addDishByReservation(req.body);
-  if (result.id) {
-    res.status(201);
-    res.json({ message: "New dish added.", result });
-  } else {
-    res.sendStatus(400);
+  try {
+    const result = await addDishByReservation(req.body);
+    if (result) {
+      res.status(201).json({ message: "New dish added.", result });
+    } else {
+      res.status(400).json({ message: "Failed to add dish." });
+    }
+  } catch (error) {
+    console.error("Error adding dish:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
+
 
 export {
   getReservations,
