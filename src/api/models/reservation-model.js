@@ -61,29 +61,33 @@ const addReservation = async (reservation) => {
     registered_user,
   } = reservation;
 
+  const sql = `INSERT INTO Reservation (person_id, restaurant_id, reservation_name,
+   reservation_start, reservation_end, table_id, registered_user)
+                 VALUES (?, ?, ?, ?, ?, ?, ?)`;
+  const params = [
+    person_id,
+    restaurant_id,
+    reservation_name,
+    reservation_start,
+    reservation_end,
+    table_id,
+    registered_user,
+  ];
+
   try {
-    const sql = `INSERT INTO Reservation (person_id, restaurant_id, reservation_name, reservation_start, reservation_end, table_id, registered_user) VALUES (?, ?, ?, ?, ?, ?, ?)`;
-    const params = [
-      person_id,
-      restaurant_id,
-      reservation_name,
-      reservation_start,
-      reservation_end,
-      table_id,
-      registered_user,
-    ];
     const [rows] = await promisePool.execute(sql, params);
-    console.log("rows", rows);
-    if (rows[0].affectedRows === 0) {
+
+    if (!rows || typeof rows.affectedRows === "undefined" || rows.affectedRows === 0) {
+      console.error("No rows affected or rows is undefined");
       return false;
     }
-    return { id: rows[0].insertId };
+
+    return { id: rows.insertId };
   } catch (error) {
     console.error("Error adding reservation:", error);
-    throw error;
+    return false;
   }
 };
-
 // Remove reservation
 const removeReservation = async (id) => {
   try {
