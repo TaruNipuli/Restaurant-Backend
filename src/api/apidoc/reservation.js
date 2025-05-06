@@ -1,5 +1,5 @@
 /**
- * @api {get} /reservations Get All Reservations
+ * @api {get} /reserve Get All Reservations
  * @apiName GetReservations
  * @apiGroup Reservation
  *
@@ -23,7 +23,7 @@
  */
 
 /**
- * @api {post} /reservations Create a Reservation
+ * @api {post} /reserve Create a Reservation
  * @apiName PostReservation
  * @apiGroup Reservation
  *
@@ -40,7 +40,7 @@
  */
 
 /**
- * @api {get} /reservations/:id Get Reservation by ID
+ * @api {get} /reserve/:id Get Reservation by ID
  * @apiName GetReservationById
  * @apiGroup Reservation
  *
@@ -51,7 +51,7 @@
  */
 
 /**
- * @api {delete} /reservations/:id Delete Reservation by ID
+ * @api {delete} /reserve/:id Delete Reservation by ID
  * @apiName DeleteReservation
  * @apiGroup Reservation
  *
@@ -62,7 +62,7 @@
  */
 
 /**
- * @api {get} /reservations/user/:id Get Reservations by User ID
+ * @api {get} /reserve/user/:id Get Reservations by User ID
  * @apiName GetReservationByUserId
  * @apiGroup Reservation
  *
@@ -73,7 +73,7 @@
  */
 
 /**
- * @api {post} /reservations/dish Add Dish to Reservation
+ * @api {post} /reserve/dish Add Dish to Reservation
  * @apiName PostDish
  * @apiGroup Reservation
  *
