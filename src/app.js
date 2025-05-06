@@ -1,12 +1,6 @@
 import express from "express";
 import api from "./api/index.js";
 import cors from "cors";
-import path from "path";
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 const app = express();
 
 app.use(cors());
@@ -21,7 +15,7 @@ app.use("/api/v1", api);
 
 // Default route
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname + "/docs/index.html"));
+  res.send("Welcome to our restaurant");
 });
 
 // Route to serve REST API documentation
