@@ -9,7 +9,7 @@
  * @apiBody {String} description Description of the dish.
  * @apiBody {Number} price Price of the dish.
  *
- * @apiSuccess {String} message Success message.
+ * @apiSuccess (201) Dish created successfully
  * @apiSuccess {Object} dish Created dish object.
  * @apiSuccess {Number} dish.id ID of the created dish.
  * @apiSuccess {Number} dish.menu_id Menu ID.
