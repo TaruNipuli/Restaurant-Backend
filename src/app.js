@@ -15,7 +15,7 @@ app.use("/api/v1", api);
 
 // Default route
 app.get("/", (req, res) => {
-  res.sendFile("./docs/index.html", { root: __dirname });
+  res.sendFile(path.join(__dirname + "/docs/index.html"));
 });
 
 // Route to serve REST API documentation
