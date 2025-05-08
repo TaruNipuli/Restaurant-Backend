@@ -32,12 +32,28 @@ export const deleteDish = async (id) => {
 // Update dish
 export const updateDish = async (id, updatedData) => {
     const { dish_name, type, description, price } = updatedData;
+  
     const [result] = await promisePool.execute(
-        'UPDATE Dishes SET dish_name = ?, type = ?, description = ?, price = ? WHERE id = ?',
-        [dish_name, type, description, price, id]
+      'UPDATE Dishes SET dish_name = ?, type = ?, description = ?, price = ? WHERE id = ?',
+      [dish_name, type, description, price, id]
     );
-    return result.affectedRows;
-};
+  
+    if (result.affectedRows === 0) {
+      return { message: 'Dish not found or not updated' };
+    }
+  
+    // Fetch the updated dish
+    const [dishRows] = await promisePool.execute(
+      'SELECT * FROM Dishes WHERE id = ?',
+      [id]
+    );
+  
+    return {
+      message: 'Dish updated successfully',
+      dish: dishRows[0],
+    };
+  };
+  
 
 // Get one dish by id
 export const getDishByIdFromDb = async (id) => {

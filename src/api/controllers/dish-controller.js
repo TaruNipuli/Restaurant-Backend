@@ -46,18 +46,21 @@ export const removeDish = async (req, res) => {
 export const modifyDish = async (req, res) => {
     const { id } = req.params;
     const { dish_name, type, description, price } = req.body;
-
+  
     try {
-        const updated = await updateDish(id, { dish_name, type, description, price });
-        if (updated === 0) {
-            return res.status(404).json({ message: 'Dish not found' });
-        }
-        res.status(200).json({ message: 'Dish updated successfully' });
+      const result = await updateDish(id, { dish_name, type, description, price });
+  
+      if (!result.dish) {
+        return res.status(404).json({ message: 'Dish not found' });
+      }
+  
+      res.status(200).json(result); // returns both message and updated dish
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Failed to update dish' });
+      console.error(error);
+      res.status(500).json({ message: 'Failed to update dish' });
     }
-};
+  };
+  
 
 // Get one dish by id
 export const getDishById = async (req, res) => {

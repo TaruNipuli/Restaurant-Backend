@@ -61,15 +61,18 @@ export const updateMenu = async (req, res) => {
     const { id } = req.params;
     const { name, description, restaurant_id } = req.body;
     const image = req.file?.filename || null;
-
+  
     try {
-        const success = await updateMenuModel(id, { name, description, restaurant_id, image });
-        if (!success) {
-            return res.status(404).json({ message: 'Menu not found' });
-        }
-        res.status(200).json({ message: 'Menu updated successfully' });
+      const updatedMenu = await updateMenuModel(id, { name, description, restaurant_id, image });
+  
+      if (!updatedMenu) {
+        return res.status(404).json({ message: 'Menu not found' });
+      }
+  
+      res.status(200).json({ message: 'Menu updated successfully', menu: updatedMenu });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Failed to update menu' });
+      console.error(error);
+      res.status(500).json({ message: 'Failed to update menu' });
     }
-};
+  };
+  

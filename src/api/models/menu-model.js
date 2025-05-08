@@ -94,5 +94,12 @@ export const updateMenuModel = async (id, { name, description, restaurant_id, im
       [name, description, restaurant_id, id]
     );
   }
-  return true;
+
+  const [rows] = await promisePool.execute(`SELECT * FROM Menu WHERE id = ?`, [id]);
+
+  if (!rows || rows.length === 0) {
+    return null;
+  }
+
+  return rows[0]; // return updated menu object
 };

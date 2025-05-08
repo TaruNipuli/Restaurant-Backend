@@ -45,7 +45,14 @@ const updateUserById = async (user, id) => {
   if (rows.affectedRows === 0) {
     return false;
   }
-  return { message: 'success' };
+
+  // Fetch updated user data
+  const [updatedRows] = await promisePool.execute(`SELECT * FROM User WHERE id = ?`, [id]);
+
+  return {
+    message: 'success',
+    user: updatedRows[0], // Return the updated user data
+  };
 };
   
 const deleteUserById = async (id) => {
