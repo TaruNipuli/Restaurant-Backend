@@ -24,7 +24,7 @@ export const removeAllergenFromDish = async (dish_id, allergen_id) => {
 
 // Delete an allergen
 export const deleteAllergen = async (id) => {
-    const [result] = await promisePool.execute('DELETE FROM Allergens WHERE id = ?', [id]);
+    const [result] = await promisePool.execute('DELETE FROM Allergen WHERE id = ?', [id]);
     return result.affectedRows;
 };
 
